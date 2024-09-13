@@ -12,21 +12,17 @@ import ModalBasket from '../Modals/ModalBasket/app';
 import { useLanguage } from '../../utils/locales/LanguageContext';
 import { translate } from '../../utils/locales/i18n';
 import { RestaurantI } from '../../api/interface';
+import { useGlobalContext } from '../../context/global-context';
 
 
 const saveToLocalStorage = (state: typeof INITIAL_STATE) => {
   localStorage.setItem('cartState', JSON.stringify(state));
 };
 
-const loadFromLocalStorage = (): typeof INITIAL_STATE => {
-  const savedState = localStorage.getItem('cartState');
-  return savedState ? JSON.parse(savedState) : INITIAL_STATE;
-};
-
 const MenuItems = () => {
-  const [state, setState] = useState(loadFromLocalStorage());
   const [searchTerm, setSearchTerm] = useState('');
   const { changeLanguage } = useLanguage();
+  const { state, setState } = useGlobalContext();
 
   useEffect(() => {
     const handleResize = () => {
