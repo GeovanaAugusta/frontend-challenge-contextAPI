@@ -447,8 +447,6 @@ const MenuItems = () => {
             updatedQuantity={state.updatedQuantity}
             updatedItems={state.updatedItems}
             productCounter={state.productCounter}
-            locale={state.locale}
-            currency={state.currency}
             handleMinus={handleMinus}
             handlePlus={handlePlus}
             calculateTotal={calculateTotal}
@@ -459,15 +457,10 @@ const MenuItems = () => {
           <div className="overlay" role="dialog" aria-modal="true">
             <ModalProductDetails
               updatedItems={state.updatedItems}
-              itemPrice={state.itemPrice}
-              selectedModifier={state.selectedModifier}
               selectedItemObject={state.selectedItemObject}
               productCounter={state.productCounter}
               onProductCounter={handleQuantityUpdate}
               onPriceUpdate={handlePriceUpdate}
-              item={state.selectedItem}
-              locale={state.locale}
-              currency={state.currency}
               onClose={() => setState((prev) => ({ ...prev, isModalOpen: false }))}
               onOpen={() => {
                 setState((prev) => ({ ...prev, isModalOpenBasket: true }))

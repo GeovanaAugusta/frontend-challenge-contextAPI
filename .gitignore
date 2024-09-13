@@ -2,8 +2,12 @@
 
 # dependencies
 /node_modules
-/node_modules/.cache/*
-node_modules/.cache/tsconfig.tsbuildinfo
+/node_modules/.cache/*/
+/node_modules/.cache/*/default-development/*/
+/node_modules/.cache/tsconfig.tsbuildinfo/
+/node_modules/.cache/.eslintcache/
+jspm_packages/
+
 /.pnp
 .pnp.js
 
