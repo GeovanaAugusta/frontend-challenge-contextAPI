@@ -12,21 +12,17 @@ import ModalBasket from '../Modals/ModalBasket/app';
 import { useLanguage } from '../../utils/locales/LanguageContext';
 import { translate } from '../../utils/locales/i18n';
 import { RestaurantI } from '../../api/interface';
+import { useGlobalContext } from '../../context/global-context';
 
 
 const saveToLocalStorage = (state: typeof INITIAL_STATE) => {
   localStorage.setItem('cartState', JSON.stringify(state));
 };
 
-const loadFromLocalStorage = (): typeof INITIAL_STATE => {
-  const savedState = localStorage.getItem('cartState');
-  return savedState ? JSON.parse(savedState) : INITIAL_STATE;
-};
-
 const MenuItems = () => {
-  const [state, setState] = useState(loadFromLocalStorage());
   const [searchTerm, setSearchTerm] = useState('');
   const { changeLanguage } = useLanguage();
+  const { state, setState } = useGlobalContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -206,7 +202,14 @@ const MenuItems = () => {
     });
   };
 
-  const handleQuantityUpdate = (items: Items, quantity: number, isModifier: boolean, selectedModifier: ItemMod[], itemPrice: number) => {
+  const handleQuantityUpdate = (
+    items: Items,
+    quantity: number,
+    isModifier: boolean,
+    selectedModifier: ItemMod[],
+    itemPrice: number,
+    callback: () => void
+  ) => {
     setState((prev) => {
       const existingItemIndex = prev.updatedItems.findIndex(
         (existing) => existing.item.id === items.id
@@ -238,6 +241,8 @@ const MenuItems = () => {
         itemPrice
       };
     });
+
+    callback();
   };
 
   const truncateDescription = (description: string | undefined | null, maxLength: number) => {
@@ -248,6 +253,8 @@ const MenuItems = () => {
   };
 
   const calculateTotal = () => {
+    console.log(state.total, state.total.reduce((acc, cur) => acc + cur, 0));
+
     return state.total.reduce((acc, cur) => acc + cur, 0);
   };
 
@@ -447,12 +454,6 @@ const MenuItems = () => {
 
         {state.isModalOpenBasket && state.isMobile && (
           <ModalBasket
-            selectedModifier={state.selectedModifier}
-            updatedQuantity={state.updatedQuantity}
-            updatedItems={state.updatedItems}
-            productCounter={state.productCounter}
-            locale={state.locale}
-            currency={state.currency}
             handleMinus={handleMinus}
             handlePlus={handlePlus}
             calculateTotal={calculateTotal}
@@ -462,16 +463,8 @@ const MenuItems = () => {
         {state.isModalOpen && (
           <div className="overlay" role="dialog" aria-modal="true">
             <ModalProductDetails
-              updatedItems={state.updatedItems}
-              itemPrice={state.itemPrice}
-              selectedModifier={state.selectedModifier}
-              selectedItemObject={state.selectedItemObject}
-              productCounter={state.productCounter}
               onProductCounter={handleQuantityUpdate}
               onPriceUpdate={handlePriceUpdate}
-              item={state.selectedItem}
-              locale={state.locale}
-              currency={state.currency}
               onClose={() => setState((prev) => ({ ...prev, isModalOpen: false }))}
               onOpen={() => {
                 setState((prev) => ({ ...prev, isModalOpenBasket: true }))

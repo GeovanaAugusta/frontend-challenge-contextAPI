@@ -6,8 +6,11 @@ import PlusIcon from '../../../assets/icons/plus-small.png';
 import MinusIcon from '../../../assets/icons/minus-small.png';
 import CloseIcon from '../../../assets/icons/close.png';
 import { translate } from '../../../utils/locales/i18n';
+import { useGlobalContext } from '../../../context/global-context';
 
-const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency, updatedQuantity, productCounter, updatedItems, handleMinus, handlePlus, onClose, selectedModifier }) => {
+const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, handleMinus, handlePlus, onClose }) => {
+    const { state, setState } = useGlobalContext();
+
     return (
         <>
             <div className="container-modal">
@@ -20,9 +23,9 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency,
                             </button>
                         </div>
                         <div className="subcontainer-basket-2">
-                            {updatedQuantity > 0 ? (
-                                updatedItems.map((basket, index) => (
-                                    productCounter[index] > 0 && (
+                            {state.updatedQuantity > 0 ? (
+                                state.updatedItems.map((basket, index) => (
+                                    state.productCounter[index] > 0 && (
                                         <div key={index}>
                                             <div className="subcontainer-basket-2-1">
                                                 <div className="container-name-counter">
@@ -31,10 +34,10 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency,
                                                         basket.item.modifiers.map((modifier) =>
                                                             modifier.items
                                                                 .filter((modifierItem) =>
-                                                                    selectedModifier.some((mod) => mod.id === modifierItem.id)
+                                                                    state.selectedModifier.some((mod) => mod.id === modifierItem.id)
                                                                 )
                                                                 .map((modifierItem) => {
-                                                                    const selectedModifierUnit = selectedModifier.find(
+                                                                    const selectedModifierUnit = state.selectedModifier.find(
                                                                         (mod) => mod.id === modifierItem.id
                                                                     );
 
@@ -45,7 +48,7 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency,
                                                                     return (
                                                                         <div key={modifierItem.id}>
                                                                             <p className="modifier-name">
-                                                                                {selectedModifierUnit && translate(selectedModifierUnit.name) + ` (+${formatPrice(basket.item.price, locale, currency)})`}
+                                                                                {selectedModifierUnit && translate(selectedModifierUnit.name) + ` (+${formatPrice(basket.item.price, state.locale, state.currency)})`}
                                                                             </p>
                                                                         </div>
                                                                     );
@@ -60,7 +63,7 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency,
                                                             <img src={MinusIcon} alt="Decrease quantity" />
                                                         </button>
                                                         <p className="p-counter-order">
-                                                            {productCounter[index] > 0 ? productCounter[index] : basket.quantity}
+                                                            {state.productCounter[index] > 0 ? state.productCounter[index] : basket.quantity}
                                                         </p>
                                                         <button
                                                             className="btn-plus-basket"
@@ -72,7 +75,7 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency,
                                                     </div>
                                                 </div>
                                                 <p className="title-basket-price">
-                                                    {formatPrice((basket.price ? basket.price : basket.item.price) * (productCounter[index] > 0 ? productCounter[index] : basket.quantity), locale, currency)}
+                                                    {formatPrice((basket.price ? basket.price : basket.item.price) * (state.productCounter[index] > 0 ? state.productCounter[index] : basket.quantity), state.locale, state.currency)}
                                                 </p>
                                             </div>
                                         </div>
@@ -83,16 +86,16 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, locale, currency,
                             )}
                         </div>
 
-                        {updatedQuantity > 0 && (
+                        {state.updatedQuantity > 0 && (
                             <>
                                 <div className="subcontainer-basket-1-2">
                                     <div className="subcontainer-basket-2-1-1 border-2-1-1">
                                         <p className="title-total-basket subtotal-b">Sub-total:</p>
-                                        <p className="title-total-basket price subtotal-price">{formatPrice(calculateTotal(), locale, currency)}</p>
+                                        <p className="title-total-basket price subtotal-price">{formatPrice(calculateTotal(), state.locale, state.currency)}</p>
                                     </div>
                                     <div className="subcontainer-basket-2-1-1">
                                         <p className="title-total-basket">Total:</p>
-                                        <p className="title-total-basket price">{formatPrice(calculateTotal(), locale, currency)}</p>
+                                        <p className="title-total-basket price">{formatPrice(calculateTotal(), state.locale, state.currency)}</p>
                                     </div>
                                 </div>
                                 <div style={{ height: '48px' }}>

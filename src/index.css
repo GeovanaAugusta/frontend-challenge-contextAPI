@@ -1,3 +1,7 @@
+:root {
+  --primary-color: #4f372f;
+}
+
 body {
   margin: 0;
   font-family: "Roboto";
@@ -36,3 +40,4 @@ code {
 .no-margin {
   margin: 0px;
 }
+

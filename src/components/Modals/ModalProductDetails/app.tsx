@@ -5,47 +5,54 @@ import CloseIcon from '../../../assets/icons/close.png';
 import PlusIcon from '../../../assets/icons/plus.png';
 import MinusIcon from '../../../assets/icons/minus.png';
 import { INITIAL_STATE } from './constants';
-import { ItemMod, Items } from '../../../Interfaces/MenuI';
+import { ItemMod } from '../../../Interfaces/MenuI';
 import { formatPrice } from '../../../utils/currency';
 import { translate } from '../../../utils/locales/i18n';
+import { useGlobalContext } from '../../../context/global-context';
 
-const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter, locale, currency, onOpen, selectedItemObject, selectedModifier, itemPrice, updatedItems }) => {
-  const [state, setState] = useState({
+const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOpen }) => {
+  const { state, setState } = useGlobalContext();
+  const [stateI, setStateI] = useState({
     ...INITIAL_STATE,
-    productCounter: selectedItemObject[item.name] || 0,
-    selectedModifier: selectedModifier ? selectedModifier : [] as ItemMod[],
-    itemPrice: itemPrice ? itemPrice : item.price
+    productCounter: state.selectedItemObject[state.selectedItem.name] || 0,
   });
 
   useEffect(() => {
-    const currentItem = updatedItems.find(updatedItem => updatedItem.item.name === item.name);
+    setState(prevState => ({
+      ...prevState,
+      itemPrice: state.selectedItem.price ? state.selectedItem.price : state.itemPrice
+    }))
+
+    const currentItem = state.updatedItems.find(updatedItem => updatedItem.item.name === state.selectedItem.name);
     if (currentItem) {
       if (currentItem.quantity === 0 && currentItem.item.modifiers) {
-        setState(prevState => ({
+        setStateI(prevState => ({
           ...prevState,
           selectedModifier: [],
           itemPrice: 0,
           isDisabledBtn: true
         }));
+
+        setState(prevState => ({
+          ...prevState,
+          selectedModifier: [],
+          itemPrice: 0,
+        }))
       }
     }
-  }, [updatedItems, item.name]);
+  }, [state.updatedItems, state.selectedItem.name]);
 
-  if (!item) return null;
-
-  const handleQuantityUpdate = (item: Items, counter: number, isModifier: boolean, selectedModifier: ItemMod[], itemPrice: number) => {
-    onProductCounter(item, counter, isModifier, selectedModifier, itemPrice);
-  };
+  if (!state.selectedItem) return null;
 
   const handlePlus = () => {
-    setState((prev) => ({
+    setStateI((prev) => ({
       ...prev,
-      productCounter: state.productCounter + 1
+      productCounter: stateI.productCounter + 1
     }))
   }
 
   const handleMinus = () => {
-    setState((prev) => ({
+    setStateI((prev) => ({
       ...prev,
       productCounter: prev.productCounter > 1 ? prev.productCounter - 1 : 1
     }))
@@ -66,7 +73,7 @@ const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter
       }
     }
 
-    setState((prev) => ({
+    setStateI((prev) => ({
       ...prev,
       selectedModifier: updatedModifiers,
       isDisabledBtn: false
@@ -74,22 +81,28 @@ const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter
 
     const totalModifiersPrice = updatedModifiers.reduce((total, modifier) => total + modifier.price, 0);
 
-    setState((prev) => ({
+    setStateI((prev) => ({
       ...prev,
       selectedModifier: updatedModifiers,
       itemPrice: totalModifiersPrice,
     }));
+
+    setState(prevState => ({
+      ...prevState,
+      itemPrice: totalModifiersPrice,
+      selectedModifier: updatedModifiers
+    }))
   };
 
   return (
     <div className="container-modal">
       <div className="modal-content">
-        {item.images ? (
+        {state.selectedItem.images ? (
           <article>
             <img
               className='img-details'
-              src={item.images[0].image}
-              alt={item.name}
+              src={state.selectedItem.images[0].image}
+              alt={state.selectedItem.name}
             />
             <button className="modal-close" onClick={onClose}>
               <img src={CloseIcon} alt="" />
@@ -102,12 +115,12 @@ const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter
         )}
 
         <div className='subcontainer-details'>
-          <h2 className='title-details'>{item.name}</h2>
-          <p className='subtitle-details'>{translate(item.description ? item.description : '')}</p>
+          <h2 className='title-details'>{state.selectedItem.name}</h2>
+          <p className='subtitle-details'>{translate(state.selectedItem.description ? state.selectedItem.description : '')}</p>
 
-          {item && item.modifiers && item.modifiers.length > 0 && (
+          {state.selectedItem && state.selectedItem.modifiers && state.selectedItem.modifiers.length > 0 && (
             <div>
-              {item.modifiers.map((option) => (
+              {state.selectedItem.modifiers.map((option) => (
                 <div key={option.id}>
                   <section className='title-subtitle-modifiers'>
                     <span className='title-modifiers'>{option.name}</span>
@@ -121,7 +134,7 @@ const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter
                         <div className='flex-between' style={{ height: '72px' }}>
                           <div className='flex-column'>
                             <span className='name-modifiers'>{modifierItem.name}</span>
-                            <span className='price-modifiers'>{formatPrice(modifierItem.price, locale, currency)}</span>
+                            <span className='price-modifiers'>{formatPrice(modifierItem.price, state.locale, state.currency)}</span>
                           </div>
 
                           {option.maxChoices === 1 ? (
@@ -157,7 +170,7 @@ const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter
               <button className='btn-minus-order' onClick={() => { handleMinus(); }}>
                 <img src={MinusIcon} alt="" />
               </button>
-              <p className='p-counter'>{state.productCounter}</p>
+              <p className='p-counter'>{stateI.productCounter}</p>
               <button className='btn-plus-order' onClick={() => { handlePlus(); }}>
                 <img src={PlusIcon} alt="" />
               </button>
@@ -165,10 +178,22 @@ const ModalProductDetails: React.FC<ModalI> = ({ item, onClose, onProductCounter
             <div style={{ height: '48px' }}>
               <button
                 className='btn-add-order'
-                disabled={state.isDisabledBtn}
-                onClick={() => { handleQuantityUpdate(item, state.productCounter, state.selectedModifier.length > 0, state.selectedModifier, state.itemPrice); onClose(); onOpen(); }}
+                disabled={stateI.isDisabledBtn}
+                onClick={() => {
+                  onProductCounter(
+                    state.selectedItem,
+                    stateI.productCounter,
+                    state.selectedModifier.length > 0,
+                    state.selectedModifier,
+                    state.itemPrice,
+                    () => {
+                      onOpen();
+                    }
+                  );
+                  onClose();
+                }}
               >
-                {translate('Add to Order')} {formatPrice(state.itemPrice * state.productCounter, locale, currency)}
+                {translate('Add to Order')} {formatPrice(state.itemPrice * stateI.productCounter, state.locale, state.currency)}
               </button>
             </div>
           </div>
