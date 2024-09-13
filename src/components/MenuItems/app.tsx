@@ -202,7 +202,14 @@ const MenuItems = () => {
     });
   };
 
-  const handleQuantityUpdate = (items: Items, quantity: number, isModifier: boolean, selectedModifier: ItemMod[], itemPrice: number) => {
+  const handleQuantityUpdate = (
+    items: Items,
+    quantity: number,
+    isModifier: boolean,
+    selectedModifier: ItemMod[],
+    itemPrice: number,
+    callback: () => void
+  ) => {
     setState((prev) => {
       const existingItemIndex = prev.updatedItems.findIndex(
         (existing) => existing.item.id === items.id
@@ -234,7 +241,11 @@ const MenuItems = () => {
         itemPrice
       };
     });
+
+    // Executa o callback após o estado ser atualizado
+    callback();
   };
+
 
   const truncateDescription = (description: string | undefined | null, maxLength: number) => {
     if (description !== undefined && description !== null && description.length > maxLength) {
@@ -244,6 +255,8 @@ const MenuItems = () => {
   };
 
   const calculateTotal = () => {
+    console.log(state.total, state.total.reduce((acc, cur) => acc + cur, 0));
+
     return state.total.reduce((acc, cur) => acc + cur, 0);
   };
 

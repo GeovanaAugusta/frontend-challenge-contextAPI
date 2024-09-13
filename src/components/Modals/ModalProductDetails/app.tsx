@@ -15,13 +15,12 @@ const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOp
   const [stateI, setStateI] = useState({
     ...INITIAL_STATE,
     productCounter: state.selectedItemObject[state.selectedItem.name] || 0,
-    itemPrice: state.itemPrice ? state.itemPrice : state.selectedItem.price
   });
 
   useEffect(() => {
     setState(prevState => ({
       ...prevState,
-      itemPrice: state.itemPrice ? state.itemPrice : state.selectedItem.price
+      itemPrice: state.selectedItem.price ? state.selectedItem.price : state.itemPrice
     }))
 
     const currentItem = state.updatedItems.find(updatedItem => updatedItem.item.name === state.selectedItem.name);
@@ -180,7 +179,19 @@ const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOp
               <button
                 className='btn-add-order'
                 disabled={stateI.isDisabledBtn}
-                onClick={() => { onProductCounter(state.selectedItem, stateI.productCounter, state.selectedModifier.length > 0, state.selectedModifier, state.itemPrice); onClose(); onOpen(); }}
+                onClick={() => {
+                  onProductCounter(
+                    state.selectedItem,
+                    stateI.productCounter,
+                    state.selectedModifier.length > 0,
+                    state.selectedModifier,
+                    state.itemPrice,
+                    () => {
+                      onOpen();
+                    }
+                  );
+                  onClose();
+                }}
               >
                 {translate('Add to Order')} {formatPrice(state.itemPrice * stateI.productCounter, state.locale, state.currency)}
               </button>
