@@ -3,8 +3,6 @@ import { ItemWithQuantity } from "../../MenuItems/interface";
 
 export interface ModalBasketI {
     calculateTotal: () => number;
-    locale: string;
-    currency: string;
     updatedQuantity: number;
     productCounter: number[];
     updatedItems: ItemWithQuantity[];
