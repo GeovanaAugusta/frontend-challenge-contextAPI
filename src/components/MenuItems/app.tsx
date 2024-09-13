@@ -242,10 +242,8 @@ const MenuItems = () => {
       };
     });
 
-    // Executa o callback após o estado ser atualizado
     callback();
   };
-
 
   const truncateDescription = (description: string | undefined | null, maxLength: number) => {
     if (description !== undefined && description !== null && description.length > maxLength) {
