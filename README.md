@@ -1,46 +1,77 @@
-# Getting Started with Create React App
+# Front End Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto foi desenvolvido com o objetivo de criar uma aplicação que exibe os detalhes de um restaurante e seu menu, permitindo que o cliente adicione itens ao carrinho.
 
-## Available Scripts
+## Visão Geral
 
-In the project directory, you can run:
+Este projeto simula o menu de um restaurante, permitindo que os usuários visualizem os itens disponíveis e os adicionem ao carrinho de compras. O foco principal é na organização do código, na componentização, na responsividade e na experiência do usuário.
 
-### `npm start`
+## Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React** - Biblioteca principal para construção da interface.
+- **Typescript** - Utilizado para garantir tipagem estática e evitar erros em tempo de execução.
+- **ES6+** - Padrões modernos de JavaScript.
+- **React Hooks** - Para gerenciar estados e efeitos colaterais de forma mais eficiente.
+- **ContextAPI** - Utilizado para o gerenciamento global de estado da aplicação.
+- **React Testing Library** - Para criação de testes unitários nos componentes.
+- **CSS3** - Para estilização e responsividade.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Como Rodar o Projeto
 
-### `npm test`
+### Pré-requisitos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (versão 16 ou superior)
+- NPM ou Yarn
 
-### `npm run build`
+### Passos para rodar o projeto
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone o repositório**
+   ```bash
+   git clone git@github.com:GeovanaAugusta/frontend-challenge-contextAPI.git
+   cd frontend-challenge-contextAPI
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Instale as dependências**
+   ```bash
+   npm install
+   ```
+   ou
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   yarn install
+   ```  
 
-### `npm run eject`
+3. **Execute a aplicação**
+   ```bash
+   npm start
+   ```
+   ou
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```bash
+   yarn start
+   ```  
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    O frontend estará acessível em `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Decisões Técnicas
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Utilização de ContextAPI para gerenciar o estado global, simplificando a troca de informações entre os componentes sem a necessidade de passar props manualmente.
+- A escolha de React Hooks foi feita para facilitar o gerenciamento de estados e side effects de forma mais clara e concisa.
+- Componentização do projeto para facilitar a manutenção e a legibilidade do código.
+- Responsividade foi implementada com media queries, garantindo que o projeto funcione bem em telas de diferentes tamanhos.
 
-## Learn More
+## Testes
+- Os testes foram implementados utilizando a React Testing Library para garantir que os componentes funcionam como esperado.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Funcionalidades Implementadas
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Visualização do menu do restaurante.
+- Adição de itens ao carrinho.
+- Atualização de quantidade de itens no carrinho.
+- Cálculo dinâmico do preço total com base nos itens selecionados e suas quantidades.
+- Modal para detalhes do produto com opções de personalização (escolha de adicionais).
+
+## Deploy
+O projeto pode ser acessado em [url] para que a aplicação possa ser visualizada sem necessidade de rodar localmente.
+
+    
