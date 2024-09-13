@@ -1,77 +1,80 @@
 # Front End Challenge
 
-Este projeto foi desenvolvido com o objetivo de criar uma aplicação que exibe os detalhes de um restaurante e seu menu, permitindo que o cliente adicione itens ao carrinho.
+This project was developed to create an application that displays restaurant details and its menu, allowing the customer to add items to the cart.
 
-## Visão Geral
+## Overview
 
-Este projeto simula o menu de um restaurante, permitindo que os usuários visualizem os itens disponíveis e os adicionem ao carrinho de compras. O foco principal é na organização do código, na componentização, na responsividade e na experiência do usuário.
+This project simulates a restaurant menu, enabling users to view available items and add them to their shopping cart. The main focus is on code organization, componentization, responsiveness, and user experience.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
-- **React** - Biblioteca principal para construção da interface.
-- **Typescript** - Utilizado para garantir tipagem estática e evitar erros em tempo de execução.
-- **ES6+** - Padrões modernos de JavaScript.
-- **React Hooks** - Para gerenciar estados e efeitos colaterais de forma mais eficiente.
-- **ContextAPI** - Utilizado para o gerenciamento global de estado da aplicação.
-- **React Testing Library** - Para criação de testes unitários nos componentes.
-- **CSS3** - Para estilização e responsividade.
+- **React** - Main library for building the interface.
+- **Typescript** - Used to ensure static typing and prevent runtime errors.
+- **ES6+** - Modern JavaScript standards.
+- **React Hooks** - For efficient state management and side effects handling.
+- **ContextAPI** - Used for global state management within the application.
+- **React Testing Library** - For unit testing components.
+- **CSS3** - For styling and responsiveness.
 
-## Como Rodar o Projeto
+## How to Run the Project
 
-### Pré-requisitos
+### Prerequisites
 
-- Node.js (versão 16 ou superior)
-- NPM ou Yarn
+- Node.js (version 16 or higher)
+- NPM or Yarn
 
-### Passos para rodar o projeto
+### Steps to run the project
 
-1. **Clone o repositório**
+1. **Clone the repository**
    ```bash
    git clone git@github.com:GeovanaAugusta/frontend-challenge-contextAPI.git
    cd frontend-challenge-contextAPI
    ```
 
-2. **Instale as dependências**
+2. **Install dependencies**
    ```bash
    npm install
    ```
-   ou
+   or
 
    ```bash
    yarn install
    ```  
 
-3. **Execute a aplicação**
+3. **Run the application**
    ```bash
    npm start
    ```
-   ou
+   or
 
    ```bash
    yarn start
    ```  
 
-    O frontend estará acessível em `http://localhost:3000`.
+    The frontend will be accessible at `http://localhost:3000`.
 
 ## Decisões Técnicas
 
-- Utilização de ContextAPI para gerenciar o estado global, simplificando a troca de informações entre os componentes sem a necessidade de passar props manualmente.
-- A escolha de React Hooks foi feita para facilitar o gerenciamento de estados e side effects de forma mais clara e concisa.
-- Componentização do projeto para facilitar a manutenção e a legibilidade do código.
-- Responsividade foi implementada com media queries, garantindo que o projeto funcione bem em telas de diferentes tamanhos.
+- ContextAPI was used for global state management, simplifying information exchange between components without manually passing props.
+- React Hooks were chosen to manage states and side effects more clearly and concisely.
+- The project was componentized to make maintenance easier and improve code readability.
+- Responsiveness was implemented using media queries to ensure the project works well across different screen sizes.
 
 ## Testes
-- Os testes foram implementados utilizando a React Testing Library para garantir que os componentes funcionam como esperado.
+- Unit tests were implemented using React Testing Library to ensure components work as expected.
 
 ## Funcionalidades Implementadas
 
-- Visualização do menu do restaurante.
-- Adição de itens ao carrinho.
-- Atualização de quantidade de itens no carrinho.
-- Cálculo dinâmico do preço total com base nos itens selecionados e suas quantidades.
-- Modal para detalhes do produto com opções de personalização (escolha de adicionais).
+- View the restaurant's menu.
+- Add items to the shopping cart.
+- Update the quantity of items in the cart.
+- Dynamic total price calculation based on selected items and quantities.
+- Product detail modal with customization options (choose modifiers).
+- Internationalization for texts.
+- Internationalization for money.
+- Unit tests with React Testing Library.
 
 ## Deploy
-O projeto pode ser acessado em [url] para que a aplicação possa ser visualizada sem necessidade de rodar localmente.
+The project can be accessed at [url], allowing the application to be viewed without needing to run locally.
 
     
