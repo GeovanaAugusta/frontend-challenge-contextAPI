@@ -253,8 +253,6 @@ const MenuItems = () => {
   };
 
   const calculateTotal = () => {
-    console.log(state.total, state.total.reduce((acc, cur) => acc + cur, 0));
-
     return state.total.reduce((acc, cur) => acc + cur, 0);
   };
 
