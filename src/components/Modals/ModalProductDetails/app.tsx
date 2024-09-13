@@ -5,16 +5,16 @@ import CloseIcon from '../../../assets/icons/close.png';
 import PlusIcon from '../../../assets/icons/plus.png';
 import MinusIcon from '../../../assets/icons/minus.png';
 import { INITIAL_STATE } from './constants';
-import { ItemMod, Items } from '../../../Interfaces/MenuI';
+import { ItemMod } from '../../../Interfaces/MenuI';
 import { formatPrice } from '../../../utils/currency';
 import { translate } from '../../../utils/locales/i18n';
 import { useGlobalContext } from '../../../context/global-context';
 
-const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOpen, selectedItemObject, updatedItems }) => {
+const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOpen }) => {
   const { state, setState } = useGlobalContext();
   const [stateI, setStateI] = useState({
     ...INITIAL_STATE,
-    productCounter: selectedItemObject[state.selectedItem.name] || 0,
+    productCounter: state.selectedItemObject[state.selectedItem.name] || 0,
     itemPrice: state.itemPrice ? state.itemPrice : state.selectedItem.price
   });
 
@@ -24,7 +24,7 @@ const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOp
       itemPrice: state.itemPrice ? state.itemPrice : state.selectedItem.price
     }))
 
-    const currentItem = updatedItems.find(updatedItem => updatedItem.item.name === state.selectedItem.name);
+    const currentItem = state.updatedItems.find(updatedItem => updatedItem.item.name === state.selectedItem.name);
     if (currentItem) {
       if (currentItem.quantity === 0 && currentItem.item.modifiers) {
         setStateI(prevState => ({
@@ -41,13 +41,9 @@ const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOp
         }))
       }
     }
-  }, [updatedItems, state.selectedItem.name]);
+  }, [state.updatedItems, state.selectedItem.name]);
 
   if (!state.selectedItem) return null;
-
-  const handleQuantityUpdate = (item: Items, counter: number, isModifier: boolean, selectedModifier: ItemMod[], itemPrice: number) => {
-    onProductCounter(item, counter, isModifier, selectedModifier, state.itemPrice);
-  };
 
   const handlePlus = () => {
     setStateI((prev) => ({
@@ -184,7 +180,7 @@ const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOp
               <button
                 className='btn-add-order'
                 disabled={stateI.isDisabledBtn}
-                onClick={() => { handleQuantityUpdate(state.selectedItem, stateI.productCounter, state.selectedModifier.length > 0, state.selectedModifier, state.itemPrice); onClose(); onOpen(); }}
+                onClick={() => { onProductCounter(state.selectedItem, stateI.productCounter, state.selectedModifier.length > 0, state.selectedModifier, state.itemPrice); onClose(); onOpen(); }}
               >
                 {translate('Add to Order')} {formatPrice(state.itemPrice * stateI.productCounter, state.locale, state.currency)}
               </button>
