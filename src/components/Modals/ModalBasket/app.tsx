@@ -9,7 +9,9 @@ import { translate } from '../../../utils/locales/i18n';
 import { useGlobalContext } from '../../../context/global-context';
 
 const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, handleMinus, handlePlus, onClose }) => {
-    const { state, setState } = useGlobalContext();
+    const { state } = useGlobalContext();
+    const isCartNotEmpty = state.updatedItems.some((basket) => basket.quantity > 0);
+
 
     return (
         <>
@@ -23,7 +25,7 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, handleMinus, hand
                             </button>
                         </div>
                         <div className="subcontainer-basket-2">
-                            {state.updatedQuantity > 0 ? (
+                            {isCartNotEmpty ? (
                                 state.updatedItems.map((basket, index) => (
                                     state.productCounter[index] > 0 && (
                                         <div key={index}>
@@ -86,7 +88,7 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, handleMinus, hand
                             )}
                         </div>
 
-                        {state.updatedQuantity > 0 && (
+                        {isCartNotEmpty && (
                             <>
                                 <div className="subcontainer-basket-1-2">
                                     <div className="subcontainer-basket-2-1-1 border-2-1-1">

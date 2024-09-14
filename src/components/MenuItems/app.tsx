@@ -210,7 +210,7 @@ const MenuItems = () => {
     itemPrice: number,
     callback: () => void
   ) => {
-    
+
     setState((prev) => {
       const existingItemIndex = prev.updatedItems.findIndex(
         (existing) => existing.item.id === items.id
@@ -231,8 +231,6 @@ const MenuItems = () => {
 
       const newTotal = updatedItems.map((item) => item.quantity * item.item.price);
 
-      const updateProductCounter = updatedProductCounter.reduce((acc, cur) => acc + cur, 0);
-    
 
       return {
         ...prev,
@@ -243,7 +241,7 @@ const MenuItems = () => {
         isModifier,
         selectedModifier,
         itemPrice,
-        updateProductCounter
+        updateProductCounter: updatedProductCounter.reduce((acc, cur) => acc + cur, 0)
       };
     });
 
