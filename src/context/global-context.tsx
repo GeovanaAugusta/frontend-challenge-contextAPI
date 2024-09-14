@@ -27,6 +27,7 @@ interface GlobalState {
     selectedItemQuantity: number;
     selectedItemObject: { [key: string]: number };
     itemPrice: number;
+    updateProductCounter: number;
 }
 
 interface GlobalContextProps {
