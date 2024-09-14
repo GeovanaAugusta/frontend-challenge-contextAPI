@@ -82,7 +82,7 @@ const ModalBasket: React.FC<ModalBasketI> = ({ calculateTotal, handleMinus, hand
                                     )
                                 ))
                             ) : (
-                                <p className="subtitle-basket">Seu Basket está vazio</p>
+                                <p className="subtitle-basket">{translate('Your basket is empty')}</p>
                             )}
                         </div>
 
