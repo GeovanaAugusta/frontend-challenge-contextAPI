@@ -13,7 +13,6 @@ This project simulates a restaurant menu, enabling users to view available items
 - **ES6+** - Modern JavaScript standards.
 - **React Hooks** - For efficient state management and side effects handling.
 - **ContextAPI** - Used for global state management within the application.
-- **React Testing Library** - For unit testing components.
 - **CSS3** - For styling and responsiveness.
 
 ## How to Run the Project
