@@ -54,7 +54,7 @@ const ModalProductDetails: React.FC<ModalI> = ({ onClose, onProductCounter, onOp
   const handleMinus = () => {
     setStateI((prev) => ({
       ...prev,
-      productCounter: prev.productCounter > 1 ? prev.productCounter - 1 : 1
+      productCounter: prev.productCounter > 0 ? prev.productCounter - 1 : 1
     }))
   }
 

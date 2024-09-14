@@ -53,7 +53,7 @@ This project simulates a restaurant menu, enabling users to view available items
 
     The frontend will be accessible at `http://localhost:3000`.
 
-## Decisões Técnicas
+## Technical Decisions
 
 - ContextAPI was used for global state management, simplifying information exchange between components without manually passing props.
 - React Hooks were chosen to manage states and side effects more clearly and concisely.
@@ -63,7 +63,7 @@ This project simulates a restaurant menu, enabling users to view available items
 ## Testes
 - Unit tests were implemented using React Testing Library to ensure components work as expected.
 
-## Funcionalidades Implementadas
+## Implemented Features 
 
 - View the restaurant's menu.
 - Add items to the shopping cart.
@@ -72,7 +72,6 @@ This project simulates a restaurant menu, enabling users to view available items
 - Product detail modal with customization options (choose modifiers).
 - Internationalization for texts.
 - Internationalization for money.
-- Unit tests with React Testing Library.
 
 ## Deploy
 The project can be accessed at [url], allowing the application to be viewed without needing to run locally.

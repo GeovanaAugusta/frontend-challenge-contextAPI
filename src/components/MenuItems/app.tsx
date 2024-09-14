@@ -210,6 +210,7 @@ const MenuItems = () => {
     itemPrice: number,
     callback: () => void
   ) => {
+    
     setState((prev) => {
       const existingItemIndex = prev.updatedItems.findIndex(
         (existing) => existing.item.id === items.id
@@ -230,15 +231,19 @@ const MenuItems = () => {
 
       const newTotal = updatedItems.map((item) => item.quantity * item.item.price);
 
+      const updateProductCounter = updatedProductCounter.reduce((acc, cur) => acc + cur, 0);
+    
+
       return {
         ...prev,
-        updatedQuantity: quantity,
+        updatedQuantity: updatedProductCounter[existingItemIndex],
         updatedItems: updatedItems,
         productCounter: updatedProductCounter,
         total: newTotal,
         isModifier,
         selectedModifier,
-        itemPrice
+        itemPrice,
+        updateProductCounter
       };
     });
 
@@ -368,7 +373,7 @@ const MenuItems = () => {
               <h2 className="title-basket">{translate('Basket')}</h2>
             </div>
             <div className="subcontainer-basket-2">
-              {state.updatedQuantity > 0 ? (
+              {state.updateProductCounter > 0 ? (
                 state.updatedItems.map((basket, index) => (
                   state.productCounter[index] > 0 && (
                     <div key={index} >
@@ -432,7 +437,7 @@ const MenuItems = () => {
               )}
             </div>
 
-            {state.updatedQuantity > 0 && (
+            {state.updateProductCounter > 0 && (
               <>
                 <div className="subcontainer-basket-1-2">
                   <div className="subcontainer-basket-2-1-1 border-2-1-1">
